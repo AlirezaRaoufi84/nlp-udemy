@@ -62,3 +62,20 @@ pattern2 = r"[^\w\s]"
 for text in texts:
     no_punc_str = re.sub(pattern2, "", text)
     no_punc_text.append(no_punc_str)
+
+print(no_punc_text)
+
+# findind numbers both in FA or EN
+nums = []
+for text in texts:
+    numbers = re.findall(r"[۰-۹0-9]+", text)
+    if numbers != []:
+        nums.append(numbers)
+
+print(nums)
+
+# striping extra spaces
+for text in texts:
+    cleaned = re.sub(r"\s+", " ", text).strip()
+    print(cleaned)
+    print("-" * 50)
