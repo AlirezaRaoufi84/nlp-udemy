@@ -79,3 +79,22 @@ for text in texts:
     cleaned = re.sub(r"\s+", " ", text).strip()
     print(cleaned)
     print("-" * 50)
+
+
+# POS tagging
+tagger = POSTagger(
+    repo_id="roshan-research/hazm-postagger", model_filename="pos_tagger.model"
+)
+Sentence = "من    دارم    پایتون    یاد می‌گیرم."
+word_token = word_tokenizer.tokenize(Sentence)
+POS_sent = tagger.tag(word_token)
+"""
+
+[('من', 'PRON'),
+ ('دارم', 'VERB'),
+ ('پایتون', 'NOUN'),
+ ('یاد', 'NOUN'),
+ ('می\u200cگیرم', 'VERB'),
+ ('.', 'PUNCT')]
+
+ """
