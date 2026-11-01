@@ -1,5 +1,6 @@
-from hazm import *
 import re
+
+from hazm import *
 
 # normalizing
 Sentence = "من دوست دارم در شرکتها کار کنم."
