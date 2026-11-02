@@ -1,8 +1,11 @@
 from hazm import *
 import gensim
+from gensim.models.coherencemodel import CoherenceModel
 import gensim.corpora as corpora
+from gensim.models import LsiModel
 import pandas as pd
 import re
+import matplotlib as plt
 
 texts = [
     "پایتون یک زبان برنامه نویسی محبوب است.",
@@ -49,3 +52,39 @@ lda_model = gensim.models.LdaModel(
 )
 
 lda_model.print_topics(num_topics=num_topic, num_words=2)
+
+# biulding LSA model
+
+lsa_model = LsiModel(doc_term, num_topics=num_topic, id2word=dictionary)
+lsa_model.print_topics(num_topics=num_topic, num_words=2)
+
+# compute coherence score
+
+coherence_val = []
+model_list = []
+
+min_topics = 2
+max_topics = 5
+
+for num_topics_i in range(min_topics, max_topics + 1):
+    model = LsiModel(
+        doc_term, num_topics=num_topics_i, id2word=dictionary, random_seed=0
+    )
+    model_list.append(model)
+    coherence_model = CoherenceModel(
+        model=model, texts=article, dictionary=dictionary, coherence="c_v"
+    )
+    coherence_val.append(coherence_model.get_coherence())
+
+# ploting the best topic number
+
+plt.plot(range(min_topics, max_topics + 1), coherence_val)
+plt.xlabel("Number Of Topics")
+plt.ylabel("Coherence Score")
+plt.legend(("Coherence_values"), loc="best")
+
+# final model with best topic number for humans to undrestand
+
+final_n_topic = 2  # for example
+lsamodel_f = LsiModel(doc_term, num_topics=final_n_topic, id2word=dictionary)
+lsamodel_f.print_topics(num_topics=final_n_topic, num_words=2)
