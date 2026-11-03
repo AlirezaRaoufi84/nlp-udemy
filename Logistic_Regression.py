@@ -1,3 +1,7 @@
+# I have a data frame with two columns: text and sentiment.
+# I want to train a model that can identify whether the text is a positive sentence or a negative one.
+# I use logistic regression to do so.
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
